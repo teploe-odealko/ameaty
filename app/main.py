@@ -131,7 +131,7 @@ async def get_event(event_id: str, current_user: User = Depends(get_current_user
         users = aito_conn.get_users_by_event_id(int(event_id))
         event["preds"] = preds
         event["users"] = users["users"]
-        event['preds'] = event['preds'][0]
+        event['preds'] = [event['preds'][0]]
         return Event(**event)
     res = aito_conn.get_currently_event(int(event_id))
     users = aito_conn.get_users_by_event_id(int(event_id))
@@ -139,7 +139,6 @@ async def get_event(event_id: str, current_user: User = Depends(get_current_user
     preds = [aito_conn.get_rest_info(top5[i]) for i in range(5)]
     res["users"] = users["users"]
     res["preds"] = preds
-
     return Event(**res)
 
 
